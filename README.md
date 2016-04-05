@@ -217,6 +217,3 @@ Return = ((V(Mat) / V(start))^ (1/T)) - 1
 
 Where T is the number of years between the time of investment and the time of sale
 ```
- 
- 
-
