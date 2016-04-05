@@ -252,10 +252,10 @@ Given that Duration is the average `time` you have to wait to get the payments b
 <code>w = Cashflow(t)/(1 + y)<sup>t</sup>/ P </code>
 
 To calculate the Duration for a bond with Yield to Maturity y:
-1. Calculate the Present value of each coupon payment and the payment at maturity and the given YTM y
-1. Sum up these payment present values to get the Price P of the bond
-1. Calculate the Duration Weights of each payment (calculated in Step 1) by dividing the present value of each payment by the Price (calculated in Step 2)
-1. Multiply each weight by the payment period number, and sum up these values to get the Duration D
+ 1. Calculate the Present value of each coupon payment and the payment at maturity and the given YTM y
+ 1. Sum up these payment present values to get the Price P of the bond
+ 1. Calculate the Duration Weights of each payment (calculated in Step 1) by dividing the present value of each payment by the Price (calculated in Step 2)
+ 1. Multiply each weight by the payment period number, and sum up these values to get the Duration D
 
 
 If the Yield on my Bond changes by &#916;y percent, what is the percentage change in the Price ?
