@@ -239,7 +239,7 @@ This is often regarded as a key guage of the economy and whether it is headed fo
 Duration is a concept heavily used to analyse bonds.
 
 * *Defined* as the "average" time you have to wait for your payments.
-* *Used* to determine how sensetive the price of a bond is to changes in the yield.
+* *Used* to determine how sensitive the price of a bond is to changes in the yield.
 
 
 ### Calculation 
