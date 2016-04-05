@@ -101,7 +101,7 @@ Unlike the other cases, the yield for multi-securities cannot be analytically ca
 #### Applications
 The Present Value of money is used fairly widely in Corporate and Project finance to evaluate new prospetive projects. When considering a new project, corporations determine how much they would need to initially invest in the project to get it up and running. They then estimate the revenue that the project would bring in and the time for which the project would run. Once they have all of the numbers, the discount all of the estimated future cash flows from the project to get their present value and compare it to amount needed to invest in the project. Based on the difference in the present value of the investment and present value of the future returns they decide whether to go ahead or abandon the project.
 
-This is known as the **Net Present Value (NPV)*** evaluation.
+This is known as the **Net Present Value (NPV)*** evaluation. Specifically the Net Present value is the present value of all the cash flows. It is the revenues Net of the investments in the project.
 
 * NPV: Done in two ways
  * The future cash flows are discounted by the project's **Cost of Capital** and summed up to get their present values. If the Sum of the future Cash Flows **Net** of the initial investment is > 0, the project is profitable: Adds value
@@ -145,6 +145,8 @@ The periodic interest paid out to holding investors during the life of the bond
   * The annual coupon payment (C) is calculated as: `C = F * c`
   * The semi-annual coupon payment (C) is calculated as: `C = F * c/2`
 
+There are also financially engineered bonds that pay no coupons at all, instead, pay one large lump sum at the time of maturity. These are known as **Zero Coupon Bonds** and as such behave a lot like CDs that are offered by banks where the interest for each year is accured and paid out at the end. 
+
 ### Credit Risk
 Metric associated with the bond to indicate the risk of default: i.e. whether the bond issuer will be able to re-pay the face value amount at the time of maturity.
 Is one of the drivers of the Coupon Rate on the bond (The higher the risk of default, the higher the coupon rate demanded by investors)
@@ -157,6 +159,9 @@ A bond is traded on the secondary market between investors, and as such, its pri
   * eg. During the financial crisis, banks issued bonds at unusually high coupon rates seeking to obtain capital to cover its souring debts. Once the trouble passed and the banks came back on their feet again, those bonds soared in value. The reason being the credit rating of the issuing bank had greatly improved and you would be hard pressed to get another bond from that kind of corporate with that kind of a coupon rate.
  * Interest Risk: Have interest rates in the market risen or fallen since the bond was issued ? Is this bond still a good investment given its interest rate or are there higher lucrative coupon rate investments out there now ?
   * eg. When Interest rates rise, newly issued bonds have a higher coupon rate than those of their predecessors. Therefore in a rising interest rate environment, the prices of bonds go down. Since bonds that were previously issued have lower coupon rates than those recently available in the market, and will therefore see diminishing investor demand for them.
+ * Time (Term of the bond): The term of the bond also plays a factor in the price of the bond and how sensitive it is to market movements. The longer the term of the bond, the higher coupon rate demanded by investors because:
+  * Investors want to be compensated for *tying up* their money for a longer time (exposed to price fluctuations for a longer period of time in case they want to sell before maturity. Investors will also *miss out* out on a larger number of other investment opportunities should they arise)
+  * A longer maturity period provides the issuer a longer period for which they can *lock in* the coupon rate. Issuers need to compensate investors for receiving this *luxury*
  
 Based on how favourably the market views a bond, it could trade either at a premium (higher) or a discount (lower) to its face-value
 
@@ -217,3 +222,55 @@ Return = ((V(Mat) / V(start))^ (1/T)) - 1
 
 Where T is the number of years between the time of investment and the time of sale
 ```
+ 
+## Yield Curve or Term Structure of Interest
+A Plot of the bond yields of Zero Coupon bonds against their term periods is known as the Yield Curve of Term Structur of Interest. The term structure is often used by financiers and economists alike to see visually where the current short and long term yields are  since it reflects the market sentiment about future changes in interest rates.
+
+The shape of the term structure could be
+ * Upward sloping (Regarded as a normal yield curve)
+ * Downward sloping (Inverted Yield Curve. Usually indicates an impending recession)
+ * Flat
+
+This is often regarded as a key guage of the economy and whether it is headed for growth or a recession.
+
+## Duration
+
+### What is Duration ?
+Duration is a concept heavily used to analyse bonds.
+
+* *Defined* as the "average" time you have to wait for your payments.
+* *Used* to determine how sensetive the price of a bond is to changes in the yield.
+
+
+### Calculation 
+The Duration is calcualted as the average of the cash flow times, weighted by its contribution to the present value of the price of the bond
+
+<code>D = w<sub>1</sub>t<sub>1</sub> + w<sub>2</sub>t<sub>2</sub> + ... + w<sub>n</sub>t<sub>n</sub></code> 
+
+Given that Duration is the average `time` you have to wait to get the payments back, the formula for Duration should be an avarage of the time periods. Given that the payments are not all equal (payment at maturity vs payment for coupons) it needs to be a weighted average, Weighted by the amount each payment contributes to the Price (Present value of the payment at time t divided by the Price).
+
+<code>w = Cashflow(t)/(1 + y)<sup>t</sup>/ P </code>
+
+To calculate the Duration for a bond with Yield to Maturity y:
+1. Calculate the Present value of each coupon payment and the payment at maturity and the given YTM y
+1. Sum up these payment present values to get the Price P of the bond
+1. Calculate the Duration Weights of each payment (calculated in Step 1) by dividing the present value of each payment by the Price (calculated in Step 2)
+1. Multiply each weight by the payment period number, and sum up these values to get the Duration D
+
+
+If the Yield on my Bond changes by &#916;y percent, what is the percentage change in the Price ?
+
+To Calculate the change in Price P of a Bond if the Yield to Maturty changes from y<sub>1</sub> to y<sub>2</sub>
+
+<code>&#916;P = - D * &#916;y / (1 + y)</code>
+
+### Duration Matching: Risk Management
+One of the applications of Duration is by Financial Institutions to control the risk of their bond portfolios.
+
+* Banks often have Bonds in their Assets and Liabilities with different Times to Maturity, and thereby with different sensitivities to changes in interest rates.
+ * eg. a hike in the interest rates would cause their Liabilities to drop by a larger percentage than their assets, leaving the banks in a net loss scenario (assets do not cover their liabilities)
+* The way the banks manage this risk, is by ensuring that the durations of their overall assets, matches the duration of their liabilities.
+ * This way the sensitivity of the liabilities and assets to changes in interest rates is the same. i.e. A hike in interest rates, would cause their liabilities and assets to drop by the same amount. 
+* This is called *Duration Matching* and the portfolio is set to be *Immunized*
+
+
