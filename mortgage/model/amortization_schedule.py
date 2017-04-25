@@ -1,5 +1,6 @@
 class AmortizationSchedule:
-    """Class that holds details of a mortgage amortization schedule. It will have details of the monthly payments, sum totals of the payments and percentages of the interests"""
+    """Class that holds details of a mortgage amortization schedule. It will have details of the monthly payments, 
+    sum totals of the payments and percentages of the interests"""
 
     def __init__(self):
         self.payment_schedule = []
@@ -19,9 +20,9 @@ class AmortizationSchedule:
                                                   self.totals['principal'], 2),
                                               round(self.totals['interest'], 2))
 
-        str_ += "\nInterest Percentage: {}".format(
+        str_ += "\nInterest as a Percentage of Total Payment: {}".format(
             round(self.metrics['Interest'], 2))
-        str_ += "\nInterest as Percentage of Principal: {}".format(
+        str_ += "\nInterest as a Percentage of Principal: {}".format(
             round(self.metrics['InterestOverPrincipal'], 2))
 
         return str_

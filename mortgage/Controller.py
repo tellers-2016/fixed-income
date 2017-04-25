@@ -8,9 +8,11 @@ class Controller(object):
 
     def __init__(self):
         super(Controller, self).__init__()
-        self.view = GraphView()
+        # self.view = GraphView()
+        self.view = PrintView()
 
     def calculate_mortgage_schedule(self):
+        # These could be obtained from user input by the view
         principal = 200000
         rate = 6.5
         term = 30

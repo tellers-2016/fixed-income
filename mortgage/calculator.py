@@ -26,31 +26,22 @@ class Calculator:
 
         return (monthly_rate * principal) / (1 - ((1 + monthly_rate) ** (-1 * monthly_term)))
 
-    @staticmethod
-    def calculate_new_monthly_payment(principal, rate, term):
-        monthly_rate = Calculator.convert_rate_to_monthly(rate)
-        monthly_term = Calculator.convert_term_to_monthly(term)
-
-        factor = (1 + monthly_rate) ** monthly_term
-
-        return (monthly_rate * factor * principal) / (factor - 1)
-
-    @staticmethod
-    def calculate_loan_balance(principal, rate, term, months_elapsed):
-        """ Calculate for a given mortgage, based on months_elapsed, what is the outstanding
-        principal balance
-        :param principal:
-        :param rate:
-        :param term:
-        :param months_elapsed:
-        :return: The balance of the principal amount yet to be re-paid
-        """
-        monthly_rate = Calculator.convert_rate_to_monthly(rate)
-        monthly_term = Calculator.convert_term_to_monthly(term)
-
-        factor = (1 + monthly_rate) ** monthly_term
-
-        return (factor - ((1 + monthly_rate) ** months_elapsed)) * principal / (factor - 1)
+    #@staticmethod
+    # def calculate_loan_balance(principal, rate, term, months_elapsed):
+    #     """ Calculate for a given mortgage, based on months_elapsed, what is the outstanding
+    #     principal balance
+    #     :param principal:
+    #     :param rate:
+    #     :param term:
+    #     :param months_elapsed:
+    #     :return: The balance of the principal amount yet to be re-paid
+    #     """
+    #     monthly_rate = Calculator.convert_rate_to_monthly(rate)
+    #     monthly_term = Calculator.convert_term_to_monthly(term)
+    #
+    #     factor = (1 + monthly_rate) ** monthly_term
+    #
+    #     return (factor - ((1 + monthly_rate) ** months_elapsed)) * principal / (factor - 1)
 
     @staticmethod
     def calculate_monthly_interest(principal_balance, rate):
@@ -67,12 +58,11 @@ class Calculator:
         totals = {'payments': 0, 'interest': 0, 'principal': 0}
         metrics = {'Interest': 0, 'InterestOverPrincipal': 0}
 
-        # Loop through the monthly payments and calculate the totals.
-        for payment in amortization_schedule.payment_schedule:
-            # Add to the totals
-            totals['payments'] += payment.payment
-            totals['interest'] += payment.interest
-            totals['principal'] += payment.principal
+        # Get the final payment, which holds the overall cumulative values
+        final_payment = amortization_schedule.payment_schedule[len(amortization_schedule.payment_schedule)-1]
+        totals['payments'] = final_payment.cumulative_payment
+        totals['interest'] = final_payment.cumulative_interest
+        totals['principal'] = final_payment.cumulative_principal
 
         # Once the totals are calculated, calculate the percentage metrics
         metrics['Interest'] = totals['interest'] / totals['payments'] * 100
@@ -94,8 +84,7 @@ class Calculator:
         :return:
         """
         monthly_term = Calculator.convert_term_to_monthly(term)
-        monthly_payment = round(
-            Calculator.calculate_monthly_payment(principal, rate, term), 2)
+        monthly_payment = round(Calculator.calculate_monthly_payment(principal, rate, term), 2)
 
         principal_balance = principal
         current_month = 1
@@ -109,10 +98,8 @@ class Calculator:
                                                                            rate), 2)
 
             if principal_balance > monthly_payment:
-                monthly_principal = round(
-                    (monthly_payment - monthly_interest), 2)
-                principal_balance = round(
-                    (principal_balance - monthly_principal), 2)
+                monthly_principal = round((monthly_payment - monthly_interest), 2)
+                principal_balance = round((principal_balance - monthly_principal), 2)
             else:
                 # This is typically for the last month when the balance is less than the
                 # monthly payment

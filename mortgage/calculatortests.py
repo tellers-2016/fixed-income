@@ -5,7 +5,6 @@ from model.amortization_schedule import AmortizationSchedule
 from calculator import Calculator
 
 
-
 class TestCalculator(unittest.TestCase):
     """Test suite for the mortgage calculator"""
 

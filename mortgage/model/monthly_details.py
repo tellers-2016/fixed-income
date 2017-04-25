@@ -18,7 +18,8 @@ class MonthlyDetails:
         self.cumulative_payment = cumulative_payment
 
     def __str__(self):
-        return ("Monthly Principal: {}, Monthly Interest: {}, Monthly Payment: {}, Principal balance: {}, Cumulative Principal: {}, Cumulative Interest: {}, Cumulative Payment: {}  for month: {}"
+        return ("Monthly Principal: {}, Monthly Interest: {}, Monthly Payment: {}, Principal balance: {}, "
+                "Cumulative Principal: {}, Cumulative Interest: {}, Cumulative Payment: {}  for month: {}"
                 .format(self.principal,
                         self.interest,
                         self.payment,
