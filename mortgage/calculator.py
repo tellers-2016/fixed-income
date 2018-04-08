@@ -2,11 +2,15 @@ from model.amortization_schedule import AmortizationSchedule
 from model.monthly_details import MonthlyDetails
 
 
+
+
 class Calculator:
     """Mortgage calculation class. Calculates the monthly payment, interest, etc"""
 
     def __init__(self):
-        pass
+        self.last_value = 0
+
+
 
     @staticmethod
     def convert_rate_to_monthly(rate):
@@ -48,21 +52,16 @@ class Calculator:
         monthly_rate = Calculator.convert_rate_to_monthly(rate)
         return principal_balance * monthly_rate
 
+
     @staticmethod
-    def calculate_mortgage_metrics(amortization_schedule):
+    def calculate_mortgage_metrics(amortization_schedule, totals):
         """ Calculates the metrics for a given amortization schedule.
         :param amortization_schedule: The amortization schedule that has details of the monthly payments of a mortgage
+        :param totals: The totals calculated for the payment, interest, etc. that are used to calculate the metrics
         :return: Returns the amortization schedule with the metric values filled in
         """
 
-        totals = {'payments': 0, 'interest': 0, 'principal': 0}
         metrics = {'Interest': 0, 'InterestOverPrincipal': 0}
-
-        # Get the final payment, which holds the overall cumulative values
-        final_payment = amortization_schedule.payment_schedule[len(amortization_schedule.payment_schedule)-1]
-        totals['payments'] = final_payment.cumulative_payment
-        totals['interest'] = final_payment.cumulative_interest
-        totals['principal'] = final_payment.cumulative_principal
 
         # Once the totals are calculated, calculate the percentage metrics
         metrics['Interest'] = totals['interest'] / totals['payments'] * 100
@@ -76,7 +75,14 @@ class Calculator:
         return amortization_schedule
 
     @staticmethod
-    def calculate_schedule(principal, rate, term):
+    def is_time_to_make_early_payment(current_month, early_payment_frequency):
+        if early_payment_frequency == 0:
+            return False
+
+        return current_month % early_payment_frequency == 0
+
+    @staticmethod
+    def calculate_schedule(principal, rate, term, early_payment=0, early_payment_frequency=0):
         """ Calculate the amortization schedule of a mortgage
         :param principal: The Principal borrowed
         :param rate: The annual rate of interest of the mortgage
@@ -88,11 +94,15 @@ class Calculator:
 
         principal_balance = principal
         current_month = 1
-        totals = {'payments': 0, 'interest': 0, 'principal': 0}
 
         amortization_schedule = AmortizationSchedule()
+        totals = amortization_schedule.totals
 
-        while current_month <= monthly_term:
+        while principal_balance > 0:
+            if Calculator.is_time_to_make_early_payment(current_month, early_payment_frequency):
+                totals['early'] += early_payment
+                principal_balance -= early_payment
+
             # Calculate the monthly principal and interest
             monthly_interest = round(Calculator.calculate_monthly_interest(principal_balance,
                                                                            rate), 2)
@@ -129,8 +139,8 @@ class Calculator:
             # Increment the month counter
             current_month += 1
 
-        Calculator.calculate_mortgage_metrics(amortization_schedule)
+        return Calculator.calculate_mortgage_metrics(amortization_schedule, totals)
 
         # print(amortization_schedule)
 
-        return amortization_schedule
+        # return amortization_schedule

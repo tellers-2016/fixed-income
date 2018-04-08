@@ -13,12 +13,14 @@ class Controller(object):
 
     def calculate_mortgage_schedule(self):
         # These could be obtained from user input by the view
-        principal = 200000
-        rate = 6.5
-        term = 30
+        principal = 350000
+        rate = 3.875
+        term = 27
+        early_payment = 6000
+        frequency = 6
 
         # Run the calculation
-        schedule = Calculator.calculate_schedule(principal, rate, term)
+        schedule = Calculator.calculate_schedule(principal, rate, term, early_payment, frequency)
 
         # Display it
         self.view.display_schedule(schedule)
