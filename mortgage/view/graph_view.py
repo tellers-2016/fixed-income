@@ -48,9 +48,9 @@ class GraphView(BaseView):
                      xytext=(250, 475000),
                      arrowprops=dict(facecolor='red', shrink=0.05))
 
-        # plt.show()
+        plt.show()
 
-        # plt.pie([schedule.totals['interest'], schedule.totals['principal']],
-        #         labels=["Interest", "Principal"],
-        #         explode=(0, 0.1))
+        plt.pie([schedule.totals['interest'], schedule.totals['principal']],
+                labels=["Interest", "Principal"],
+                explode=(0, 0.1))
         plt.show()
